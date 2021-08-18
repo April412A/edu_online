@@ -4,10 +4,7 @@ package com.cyj.serviceedu.controller;
 import com.cyj.serviceedu.domain.EduTeacher;
 import com.cyj.serviceedu.service.EduTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +32,14 @@ public class EduTeacherController {
         List<EduTeacher> list = teacherService.list(null);
         System.out.println("list=="+list);
         return list;
+    }
+
+    //2 逻辑删除讲师的方法
+    @DeleteMapping("{id}")
+    public boolean removeTeacher(@PathVariable String id){
+        boolean flag = teacherService.removeById(id);
+        System.out.println("flag=="+flag);
+        return flag;
     }
 
 }
