@@ -1,5 +1,6 @@
 package com.cyj.serviceedu.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cyj.commonutils.R;
 import com.cyj.serviceedu.domain.EduTeacher;
 import com.cyj.serviceedu.service.EduTeacherService;
@@ -43,7 +44,7 @@ public class EduTeacherController {
     @ApiOperation(value = "逻辑删除讲师",tags = "逻辑删除讲师")
     @DeleteMapping("{id}")
     public R removeTeacher(@ApiParam(name = "id", value = "讲师ID", required = true)
-            @PathVariable String id){
+                           @PathVariable String id){
         boolean flag = teacherService.removeById(id);
         System.out.println("flag=="+flag);
         if(flag) {
@@ -51,6 +52,30 @@ public class EduTeacherController {
         } else {
             return R.error();
         }
+    }
+
+    //3 分页查询讲师的方法
+    //current 当前页 ; limit 每页记录数
+    @ApiOperation(value = "分页查询讲师",tags = "分页查询讲师")
+    @GetMapping("pageTeacher/{current}/{limit}")
+    public R pageListTeacher(@PathVariable long current,
+                             @PathVariable long limit) {
+        //创建page对象
+        Page<EduTeacher> pageTeacher = new Page<>(current,limit);
+
+        //调用方法实现分页;调用方法时候，底层封装，把分页所有数据封装到pageTeacher对象里面
+        teacherService.page(pageTeacher,null);
+
+        long total = pageTeacher.getTotal();//总记录数
+        List<EduTeacher> records = pageTeacher.getRecords(); //数据list集合
+
+        /*  --第二种方法也可以--
+        Map map = new HashMap();
+        map.put("total",total);
+        map.put("rows",records);
+        return R.ok().data(map);*/
+
+        return R.ok().data("total",total).data("rows",records);
     }
 
 }
