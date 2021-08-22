@@ -1,6 +1,6 @@
 package com.cyj.serviceedu.controller;
 
-
+import com.cyj.commonutils.R;
 import com.cyj.serviceedu.domain.EduTeacher;
 import com.cyj.serviceedu.service.EduTeacherService;
 import io.swagger.annotations.Api;
@@ -33,20 +33,24 @@ public class EduTeacherController {
     //rest风格
     @ApiOperation(value = "所有讲师列表",tags = "所有讲师列表")
     @GetMapping("findAll")
-    public List<EduTeacher> findAll(){
+    public R findAll(){
         List<EduTeacher> list = teacherService.list(null);
         System.out.println("list=="+list);
-        return list;
+        return R.ok().data("items", list);
     }
 
     //2 逻辑删除讲师的方法
     @ApiOperation(value = "逻辑删除讲师",tags = "逻辑删除讲师")
     @DeleteMapping("{id}")
-    public boolean removeTeacher(@ApiParam(name = "id", value = "讲师ID", required = true)
+    public R removeTeacher(@ApiParam(name = "id", value = "讲师ID", required = true)
             @PathVariable String id){
         boolean flag = teacherService.removeById(id);
         System.out.println("flag=="+flag);
-        return flag;
+        if(flag) {
+            return R.ok();
+        } else {
+            return R.error();
+        }
     }
 
 }
