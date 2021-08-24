@@ -134,5 +134,32 @@ public class EduTeacherController {
         }
     }
 
+    //6 根据ID查询讲师
+    @ApiOperation(value = "根据ID查询讲师",tags="根据ID查询讲师")
+    @GetMapping("getTeacher/{id}")
+    public R getTeacher(@PathVariable String id){
+        EduTeacher eduTeacher = teacherService.getById(id);
+        if(eduTeacher!=null){
+            return R.ok().data("eduTeacher",eduTeacher);
+        }else{
+            return R.error();
+        }
+    }
+
+    //7 修改讲师
+    @ApiOperation(value = "修改讲师",tags="修改讲师")
+    @PostMapping("updateTeacher")
+    public R updateTeacher(@RequestBody EduTeacher eduTeacher){
+        boolean flag = teacherService.updateById(eduTeacher);
+        if(flag){
+            return R.ok();
+        }else {
+            return R.error();
+        }
+
+    }
+
+
+
 }
 
