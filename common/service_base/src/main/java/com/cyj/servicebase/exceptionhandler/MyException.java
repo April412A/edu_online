@@ -17,4 +17,12 @@ public class MyException extends RuntimeException{
         this.code=code;
         this.msg=msg;
     }
+
+    @Override
+    public String toString() {
+        return "MyException{" +
+        "message=" + this.getMessage() +
+        ", code=" + code +
+        '}';
+    }
 }

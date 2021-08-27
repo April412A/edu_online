@@ -1,11 +1,14 @@
 package com.cyj.servicebase.exceptionhandler;
 
 
+import com.cyj.commonutils.ExceptionUtil;
 import com.cyj.commonutils.R;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -33,6 +36,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public R error(MyException e){
         e.printStackTrace();
+        log.error(ExceptionUtil.getMessage(e));
         return R.error().code(e.getCode()).message(e.getMsg());
     }
 
