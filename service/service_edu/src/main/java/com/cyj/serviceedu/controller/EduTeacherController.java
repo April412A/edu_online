@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cyj.commonutils.R;
+import com.cyj.servicebase.exceptionhandler.MyException;
 import com.cyj.serviceedu.domain.EduTeacher;
 import com.cyj.serviceedu.domain.vo.TeacherQuery;
 import com.cyj.serviceedu.service.EduTeacherService;
@@ -72,6 +73,13 @@ public class EduTeacherController {
 
         long total = pageTeacher.getTotal();//总记录数
         List<EduTeacher> records = pageTeacher.getRecords(); //数据list集合
+
+        try {
+            int i = 10/0;
+        }catch(Exception e) {
+            //执行自定义异常
+            throw new MyException(20001,"执行自定义特定异常处理....");
+        }
 
         /*  --第二种方法也可以--
         Map map = new HashMap();
