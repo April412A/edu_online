@@ -124,6 +124,9 @@ public class EduTeacherController {
         //调用方法实现条件查询分页
         teacherService.page(page,wrapper);
 
+        //根据时间排序
+        wrapper.orderByDesc("gmt_create",end);
+
         long total = page.getTotal();//总记录数
         List<EduTeacher> records = page.getRecords(); //数据list集合
 
