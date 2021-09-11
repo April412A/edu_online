@@ -3,6 +3,7 @@ package com.cyj.serviceedu.controller;
 import com.cyj.commonutils.R;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/serviceedu/user")
 @CrossOrigin  //解决跨域
