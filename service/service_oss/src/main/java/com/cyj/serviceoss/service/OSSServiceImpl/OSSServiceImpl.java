@@ -24,15 +24,15 @@ public class OSSServiceImpl implements OSSService {
         String accessKeySecret = ConstantPropertiesUtils.KEYSERCRET;
         String bucketname = ConstantPropertiesUtils.BUCKETNAME;
 
+        //获取文件名称
+        String filename = file.getOriginalFilename();
+
         try{
             // 创建OSSClient实例。
             OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
             //获取上传文件流（Object完整路径）
             InputStream inputStream = file.getInputStream();
-
-            //获取文件名称
-            String filename = file.getOriginalFilename();
 
             //1 在文件名称里面添加随机唯一的值
             String uuid = UUID.randomUUID().toString().replaceAll("-","");
@@ -71,14 +71,14 @@ public class OSSServiceImpl implements OSSService {
             // 关闭OSSClient。
             ossClient.shutdown();
 
-            //把上传之后文件路径返回
-            //需要把上传到阿里云oss路径手动拼接出来
-            //  https://online-edu-cyj.oss-cn-beijing.aliyuncs.com/xxx.jpg
-            String url = "https://"+bucketname+"."+endpoint+"/"+filename;
-            return url;
+
         }catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        //把上传之后文件路径返回
+        //需要把上传到阿里云oss路径手动拼接出来
+        //  https://online-edu-cyj.oss-cn-beijing.aliyuncs.com/xxx.jpg
+        String url = "https://"+bucketname+"."+endpoint+"/"+filename;
+        return url;
     }
 }
