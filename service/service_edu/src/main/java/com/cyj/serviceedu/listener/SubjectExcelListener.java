@@ -57,6 +57,12 @@ public class SubjectExcelListener extends AnalysisEventListener<SubjectData> {
         QueryWrapper<EduSubject> wrapper = new QueryWrapper<>();
         wrapper.eq("title",name);
         wrapper.eq("parent_id","0");
+        /*
+        getOne默认当查询结果为多条，直接抛出异常，底层调用的是重载方法getOne(Wrapper queryWrapper, boolean throwEx)
+        重载方法getOne(Wrapper queryWrapper, boolean throwEx)，根据入参是否抛出异常执行不同的方法
+        第二个参数为true，则直接执行方法；
+        第二个参数为false，则在满足条件的多条记录里找到第一条数据直接返回；
+        */
         EduSubject oneSubject = subjectService.getOne(wrapper);
         return oneSubject;
     }
