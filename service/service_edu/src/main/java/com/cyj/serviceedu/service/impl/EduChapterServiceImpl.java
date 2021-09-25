@@ -1,6 +1,7 @@
 package com.cyj.serviceedu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.cyj.servicebase.exceptionhandler.MyException;
 import com.cyj.serviceedu.domain.EduChapter;
 import com.cyj.serviceedu.domain.EduVideo;
 import com.cyj.serviceedu.domain.chapter.ChapterVo;
@@ -33,26 +34,26 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     @Override
     public List<ChapterVo> getChapterVideo(String courseId) {
         QueryWrapper<EduChapter> chapterWrapper = new QueryWrapper<>();
-        chapterWrapper.eq("course_id",courseId);
+        chapterWrapper.eq("course_id", courseId);
         List<EduChapter> chapterList = baseMapper.selectList(chapterWrapper);
 
         QueryWrapper<EduVideo> videoWrapper = new QueryWrapper<>();
-        videoWrapper.eq("course_id",courseId);
+        videoWrapper.eq("course_id", courseId);
         List<EduVideo> videoList = eduVideoService.list(videoWrapper);
 
         List<ChapterVo> List = new ArrayList<>();
 
-        for (int i = 0; i <chapterList.size() ; i++) {
+        for (int i = 0; i < chapterList.size(); i++) {
             EduChapter eduChapter = chapterList.get(i);
             ChapterVo chapterVo = new ChapterVo();
-            BeanUtils.copyProperties(eduChapter,chapterVo);
+            BeanUtils.copyProperties(eduChapter, chapterVo);
             List.add(chapterVo);
 
             List<VideoVo> vList = new ArrayList<>();
-            for (int j = 0; j <videoList.size(); j++) {
+            for (int j = 0; j < videoList.size(); j++) {
                 EduVideo eduVideo = videoList.get(j);
                 //判断：小节里面chapterid和章节里面id是否一样
-                if(eduVideo.getChapterId().equals(eduChapter.getId())) {
+                if (eduVideo.getChapterId().equals(eduChapter.getId())) {
                     VideoVo videoVo = new VideoVo();
                     BeanUtils.copyProperties(eduVideo, videoVo);
                     vList.add(videoVo);
@@ -62,5 +63,23 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         }
 
         return List;
+    }
+
+    //删除的方法
+    @Override
+    public boolean deleteChapter(String chapterId) {
+        //根据chapterid章节id 查询小节表，如果查询数据，不进行删除
+        QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
+        wrapper.eq("chapter_id", chapterId);
+        int count = eduVideoService.count(wrapper);
+        //判断
+        if (count > 0) {//查询出小节，不进行删除
+            throw new MyException(20001, "不能删除");
+        } else { //不能查询数据，进行删除
+            //删除章节
+            int result = baseMapper.deleteById(chapterId);
+            //成功  1>0   0>0
+            return result > 0;
+        }
     }
 }
