@@ -46,12 +46,12 @@ export default {
 
 
     previous() {
-      this.$router.push({path:'/course/info/1'})
+      this.$router.push({path:'/course/info/'+this.courseId})
     },
     next() {
       if (this.active++ > 2) this.active = 0;
       //跳转到第三步
-      this.$router.push({path:'/course/publish/1'})
+      this.$router.push({path:'/course/publish/'+this.courseId})
     }
   }
 }
