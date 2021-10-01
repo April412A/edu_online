@@ -31,6 +31,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     @Autowired
     private EduVideoService eduVideoService;
 
+    //课程大纲列表,根据课程id进行查询
     @Override
     public List<ChapterVo> getChapterVideo(String courseId) {
         QueryWrapper<EduChapter> chapterWrapper = new QueryWrapper<>();
