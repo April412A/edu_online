@@ -108,7 +108,7 @@ export default {
     },
     created() { //页面渲染之前执行，一般调用methods定义的方法
         //调用
-        this.getList() 
+        this.getList()
     },
     methods:{  //创建具体的方法，调用teacher.js定义的方法
         //讲师列表的方法
@@ -120,9 +120,9 @@ export default {
                     //console.log(response)
                     this.list = response.data.rows
                     this.total = response.data.total
-                    console.log(this.list)   
+                    console.log(this.list)
                     console.log(this.total)
-                }) 
+                })
                 .catch(error=>{
                   console.log(error)
                 })
@@ -151,9 +151,14 @@ export default {
                     //回到列表页面
                     this.getList()
                 })
-            }) //点击取消，执行catch方法
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '已取消删除'
+              });
+            })
         }
- 
+
     }
 }
 </script>
