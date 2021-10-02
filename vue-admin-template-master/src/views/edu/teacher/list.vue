@@ -78,7 +78,7 @@
       </el-table-column>
     </el-table>
 
-  <!-- 分页 -->
+    <!-- 分页 -->
     <el-pagination
       :current-page="current"
       :page-size="limit"
@@ -94,71 +94,71 @@
 //引入调用teacher.js文件
 import teacher from '@/api/edu/teacher'
 export default {
-    //写核心代码位置
-    // data:{
-    // },
-    data() { //定义变量和初始值
-        return {
-          list:null,//查询之后接口返回集合
-          current:1,//当前页
-          limit:5,//每页记录数
-          total:0,//总记录数
-          teacherQuery:{} //条件封装对象
-        }
-    },
-    created() { //页面渲染之前执行，一般调用methods定义的方法
-        //调用
-        this.getList()
-    },
-    methods:{  //创建具体的方法，调用teacher.js定义的方法
-        //讲师列表的方法
-        getList(current=1) {
-            this.current = current
-            teacher.getTeacherListPage(this.current,this.limit,this.teacherQuery)
-                .then(response =>{//请求成功
-                    //response接口返回的数据
-                    //console.log(response)
-                    this.list = response.data.rows
-                    this.total = response.data.total
-                    console.log(this.list)
-                    console.log(this.total)
-                })
-                .catch(error=>{
-                  console.log(error)
-                })
-        },
-        resetData() {//清空的方法
-            //表单输入项数据清空
-            this.teacherQuery = {}
-            //查询所有讲师数据
-            this.getList()
-        },
-        //删除讲师的方法
-        removeDataById(id) {
-            this.$confirm('此操作将永久删除讲师记录, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {  //点击确定，执行then方法
-                //调用删除的方法
-                teacher.deleteTeacherId(id)
-                    .then(response =>{//删除成功
-                    //提示信息
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
-                    //回到列表页面
-                    this.getList()
-                })
-            }).catch(() => {
-              this.$message({
-                type: 'info',
-                message: '已取消删除'
-              });
-            })
-        }
-
+  //写核心代码位置
+  // data:{
+  // },
+  data() { //定义变量和初始值
+    return {
+      list:null,//查询之后接口返回集合
+      current:1,//当前页
+      limit:5,//每页记录数
+      total:0,//总记录数
+      teacherQuery:{} //条件封装对象
     }
+  },
+  created() { //页面渲染之前执行，一般调用methods定义的方法
+    //调用
+    this.getList()
+  },
+  methods:{  //创建具体的方法，调用teacher.js定义的方法
+    //讲师列表的方法
+    getList(current=1) {
+      this.current = current
+      teacher.getTeacherListPage(this.current,this.limit,this.teacherQuery)
+        .then(response =>{//请求成功
+          //response接口返回的数据
+          //console.log(response)
+          this.list = response.data.rows
+          this.total = response.data.total
+          console.log(this.list)
+          console.log(this.total)
+        })
+        .catch(error=>{
+          console.log(error)
+        })
+    },
+    resetData() {//清空的方法
+      //表单输入项数据清空
+      this.teacherQuery = {}
+      //查询所有讲师数据
+      this.getList()
+    },
+    //删除讲师的方法
+    removeDataById(id) {
+      this.$confirm('此操作将永久删除讲师记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {  //点击确定，执行then方法
+        //调用删除的方法
+        teacher.deleteTeacherId(id)
+          .then(response =>{//删除成功
+            //提示信息
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            //回到列表页面
+            this.getList()
+          })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      })
+    }
+
+  }
 }
 </script>

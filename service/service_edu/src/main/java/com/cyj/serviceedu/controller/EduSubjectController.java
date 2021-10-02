@@ -4,6 +4,7 @@ import com.cyj.commonutils.R;
 import com.cyj.serviceedu.domain.subject.OneSubject;
 import com.cyj.serviceedu.service.EduSubjectService;
 import com.cyj.serviceedu.service.EduTeacherService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * @author testjava
  * @since 2021-09-14
  */
+@Api(tags="课程分类管理")
 @RestController
 @RequestMapping("/serviceedu/edu-subject")
 @CrossOrigin

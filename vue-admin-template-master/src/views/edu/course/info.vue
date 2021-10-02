@@ -1,11 +1,11 @@
 <template>
   <div align-center style="margin-right: 40px">
-  <h2 style="text-align: center;">发布新课程</h2>
-  <el-steps :active="active" finish-status="success" align-center style="margin-bottom: 40px;">
-    <el-step title="填写课程基本信息"></el-step>
-    <el-step title="创建课程大纲"></el-step>
-    <el-step title="最终发布"></el-step>
-  </el-steps>
+    <h2 style="text-align: center;">发布新课程</h2>
+    <el-steps :active="active" finish-status="success" align-center style="margin-bottom: 40px;">
+      <el-step title="填写课程基本信息"></el-step>
+      <el-step title="创建课程大纲"></el-step>
+      <el-step title="最终发布"></el-step>
+    </el-steps>
 
 
     <el-form label-width="110px" align-center style=" margin-bottom: 100px;">
@@ -29,7 +29,7 @@
 
         <!-- 二级分类 -->
         <el-select v-model="courseInfo.subjectId"
-        placeholder="二级分类">
+                   placeholder="二级分类">
           <el-option
             v-for="subject in subjectTwoList"
             :key="subject.id"
@@ -58,14 +58,14 @@
       </el-form-item>
 
       <!-- 课程简介 -->
-     <el-form-item label="课程简介">
+      <el-form-item label="课程简介">
 
-       <quill-editor
-         v-model="courseInfo.description"
-         ref="myQuillEditor">
-       </quill-editor>
+        <quill-editor
+          v-model="courseInfo.description"
+          ref="myQuillEditor">
+        </quill-editor>
 
-     </el-form-item>
+      </el-form-item>
 
       <!-- 课程封面-->
       <el-form-item label="课程封面">
@@ -85,7 +85,7 @@
       </el-form-item>
 
       <el-form-item>
-      <el-button style="margin-top: 12px;" @click="next">保存并下一步</el-button>
+        <el-button style="margin-top: 12px;" @click="next">保存并下一步</el-button>
       </el-form-item>
     </el-form>
   </div>

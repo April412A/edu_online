@@ -1,11 +1,11 @@
 <template>
   <div align-center>
-  <h2 style="text-align: center;">发布新课程</h2>
-  <el-steps :active="active" finish-status="success" align-center style="margin-bottom: 40px;">
-    <el-step title="填写课程基本信息"></el-step>
-    <el-step title="创建课程大纲"></el-step>
-    <el-step title="最终发布"></el-step>
-  </el-steps>
+    <h2 style="text-align: center;">发布新课程</h2>
+    <el-steps :active="active" finish-status="success" align-center style="margin-bottom: 40px;">
+      <el-step title="填写课程基本信息"></el-step>
+      <el-step title="创建课程大纲"></el-step>
+      <el-step title="最终发布"></el-step>
+    </el-steps>
 
     <el-button type="text" @click="openChapterDialog()" >添加章节</el-button>
     <!-- 章节 -->
@@ -23,20 +23,20 @@
           </span>
         </p>
         <!-- 视频 -->
-<!--        <ul class="chapterList videoList">
-          <li
-            v-for="video in chapter.children"
-            :key="video.id">
-            <p>{{ video.title }}
+        <!--        <ul class="chapterList videoList">
+                  <li
+                    v-for="video in chapter.children"
+                    :key="video.id">
+                    <p>{{ video.title }}
 
-              <span class="acts">
+                      <span class="acts">
 
-                    <el-button style="" type="text">编辑</el-button>
-                    <el-button type="text" @click="removeVideo(video.id)">删除</el-button>
-                </span>
-            </p>
-          </li>
-        </ul>-->
+                            <el-button style="" type="text">编辑</el-button>
+                            <el-button type="text" @click="removeVideo(video.id)">删除</el-button>
+                        </span>
+                    </p>
+                  </li>
+                </ul>-->
       </li>
     </ul>
 
@@ -47,22 +47,22 @@
       </el-form-item>
     </el-form>
 
-  <!-- 添加和修改章节表单 -->
+    <!-- 添加和修改章节表单 -->
 
-  <el-dialog title="添加章节" :visible.sync="dialogChapterFormVisible">
-    <el-form :model="chapter">
-      <el-form-item label="章节标题"  label-width="120px">
-        <el-input v-model="chapter.title" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="章节排序" label-width="120px">
-        <el-input-number :min="0" v-model="chapter.sort" controls-position="right"/>
-      </el-form-item>
-    </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="dialogChapterFormVisible = false">取 消</el-button>
-      <el-button type="primary"@click="saveOrUpdate()">确 定</el-button>
-    </div>
-  </el-dialog>
+    <el-dialog title="添加章节" :visible.sync="dialogChapterFormVisible">
+      <el-form :model="chapter">
+        <el-form-item label="章节标题"  label-width="120px">
+          <el-input v-model="chapter.title" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="章节排序" label-width="120px">
+          <el-input-number :min="0" v-model="chapter.sort" controls-position="right"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogChapterFormVisible = false">取 消</el-button>
+        <el-button type="primary"@click="saveOrUpdate()">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 
 </template>
@@ -103,9 +103,9 @@ export default {
     //课程大纲列表,根据课程id进行查询
     getChapterVideo(){
       chapter.getChapterVideo(this.courseId)
-         .then(response=>{
-           this.ChapterVideoList = response.data.list
-      })
+        .then(response=>{
+          this.ChapterVideoList = response.data.list
+        })
     },
 
     //判断当前操作为添加章节还是修改章节
