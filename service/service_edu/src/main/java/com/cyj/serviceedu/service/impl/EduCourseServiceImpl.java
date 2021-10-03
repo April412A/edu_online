@@ -3,6 +3,7 @@ package com.cyj.serviceedu.service.impl;
 import com.cyj.servicebase.exceptionhandler.MyException;
 import com.cyj.serviceedu.domain.EduCourse;
 import com.cyj.serviceedu.domain.EduCourseDescription;
+import com.cyj.serviceedu.domain.vo.CoursePublishQuery;
 import com.cyj.serviceedu.domain.vo.CourseQuery;
 import com.cyj.serviceedu.mapper.EduCourseMapper;
 import com.cyj.serviceedu.service.EduCourseDescriptionService;
@@ -11,6 +12,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -88,6 +91,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         description.setDescription(courseQuery.getDescription());
         courseDescriptionService.updateById(description);
 
+    }
+
+    @Override
+    public CoursePublishQuery getCoursePublishQuery(String courseId) {
+        CoursePublishQuery coursePublishQuery = baseMapper.getCoursePublishQuery(courseId);
+        return coursePublishQuery;
     }
 
 

@@ -2,6 +2,8 @@ package com.cyj.serviceedu.controller;
 
 
 import com.cyj.commonutils.R;
+import com.cyj.serviceedu.domain.EduCourse;
+import com.cyj.serviceedu.domain.vo.CoursePublishQuery;
 import com.cyj.serviceedu.domain.vo.CourseQuery;
 import com.cyj.serviceedu.service.EduCourseService;
 import io.swagger.annotations.Api;
@@ -45,6 +47,23 @@ public class EduCourseController {
     @PostMapping("updateCourseInfo")
     public R updateCourseInfo(@RequestBody CourseQuery courseQuery){
         eduCourseService.updateCourseInfo(courseQuery);
+        return R.ok();
+    }
+
+    //根据课程id查询课程确认信息（CoursePublishQuery)
+    @GetMapping("getCoursePublishQuery/{courseId}")
+    public R getCoursePublishQuery(@PathVariable String courseId){
+        CoursePublishQuery coursePublishQuery = eduCourseService.getCoursePublishQuery(courseId);
+        return R.ok().data("coursePublishQuery",coursePublishQuery);
+    }
+
+    //最终发布
+    @PostMapping("publishCourse/{id}")
+    public R publishCourse(@PathVariable String id){
+        EduCourse eduCourse = new EduCourse();
+        eduCourse.setId(id);
+        eduCourse.setStatus("Normal");//课程发布状态
+        eduCourseService.updateById(eduCourse);
         return R.ok();
     }
 

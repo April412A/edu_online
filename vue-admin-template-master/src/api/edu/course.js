@@ -30,6 +30,21 @@ export default {
       method:'post',
       data:courseQuery
     })
+  },
+  //根据课程id查询课程确认信息（CoursePublishQuery)
+  getCoursePublishQuery(courseId){
+    return request({
+      url:'/serviceedu/edu-course/getCoursePublishQuery/'+courseId,
+      method:'get',
+    })
+  },
+  //最终发布
+  publishCourse(id){
+    return request({
+      url:'/serviceedu/edu-course/publishCourse/'+id,
+      method:'post',
+    })
   }
+
 
 }
