@@ -235,14 +235,16 @@ export default {
 
     next() {
       if (this.active++ > 2) this.active = 0;
+
       //判断添加还是修改
-      if(!this.courseInfo.id) {
+      if (!this.courseInfo.id) {
         //添加
         this.addCourseInfo()
       } else {
         this.updateCourse()
       }
-    },
+
+    }
   }
 }
 </script>

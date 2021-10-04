@@ -44,7 +44,28 @@ export default {
       url:'/serviceedu/edu-course/publishCourse/'+id,
       method:'post',
     })
+  },
+  //条件分页查询课程列表
+  pageCourseCondition(current,limit,EduCourse){
+    return request({
+      url:'/serviceedu/edu-course/pageCourseCondition/'+current+'/'+limit,
+      method:'post',
+      data:EduCourse
+    })
+  },
+  //查询所有课程
+  findAll() {
+    return request({
+      url: '/serviceedu/edu-course/findAll',
+      method: 'get',
+    })
+  },
+  ////删除课程
+  deleteCourse(id){
+    return request({
+      url: '/serviceedu/edu-course/'+id,
+      method: 'delete',
+    })
   }
-
 
 }
