@@ -41,10 +41,11 @@ public class OSSServiceImpl implements OSSService {
 
             //2 把文件按照日期进行分类
             //获取当前日期
-            //   2019/11/12
+            //   2021/01/02
             String datePath = new DateTime().toString("yyyy/MM/dd");
             //拼接
             //  2021/11/12/ewtqr313401.jpg
+            //https://oss.console.aliyun.com/bucket/oss-cn-beijing/online-edu-cyj/object?path=2021%2F
             filename = datePath+"/"+filename;
 
             // 创建PutObjectRequest对象。
@@ -55,12 +56,6 @@ public class OSSServiceImpl implements OSSService {
             //第二个参数  上传到oss文件路径和文件名称   aa/bb/1.jpg
             //第三个参数  上传文件输入流
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketname, filename, inputStream);
-
-            // 如果需要上传时设置存储类型和访问权限，请参考以下示例代码。
-            // ObjectMetadata metadata = new ObjectMetadata();
-            // metadata.setHeader(OSSHeaders.OSS_STORAGE_CLASS, StorageClass.Standard.toString());
-            // metadata.setObjectAcl(CannedAccessControlList.Private);
-            // putObjectRequest.setMetadata(metadata);
 
             // 上传文件。
             ossClient.putObject(putObjectRequest);

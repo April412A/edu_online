@@ -64,7 +64,7 @@
       </div>
     </el-dialog>
 
-    <!-- 添加和修改小节表单 -->
+    <!-- 添加小节表单 -->
     <el-dialog :visible.sync="dialogVideoFormVisible" title="添加课时">
       <el-form :model="video" label-width="120px">
         <el-form-item label="课时标题">
@@ -104,7 +104,50 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVideoFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveOrUpdateVideo()">确 定</el-button>
+        <el-button type="primary" @click="addVideo()">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 修改小节表单 -->
+    <el-dialog :visible.sync="dialogVideoFormVisibleUpdate" title="修改课时">
+      <el-form :model="video" label-width="120px">
+        <el-form-item label="课时标题">
+          <el-input v-model="video.title"/>
+        </el-form-item>
+        <el-form-item label="课时排序">
+          <el-input-number v-model="video.sort" :min="0" controls-position="right"/>
+        </el-form-item>
+        <el-form-item label="是否免费">
+          <el-radio-group v-model="video.free">
+            <el-radio :label="true">免费</el-radio>
+            <el-radio :label="false">默认</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="上传视频">
+          <el-upload
+            :on-success="handleVodUploadSuccess"
+            :on-remove="handleVodRemove"
+            :before-remove="beforeVodRemove"
+            :on-exceed="handleUploadExceed"
+            :file-list="fileList"
+            :action="BASE_API+'/servicevod/video/uploadVideo'"
+            :limit="1"
+            class="upload-demo">
+            <el-button size="small" type="primary">上传视频</el-button>
+            <el-tooltip placement="right-end">
+              <div slot="content">最大支持1G，<br>
+                支持3GP、ASF、AVI、DAT、DV、FLV、F4V、<br>
+                GIF、M2T、M4V、MJ2、MJPEG、MKV、MOV、MP4、<br>
+                MPE、MPG、MPEG、MTS、OGG、QT、RM、RMVB、<br>
+                SWF、TS、VOB、WMV、WEBM 等视频格式上传</div>
+              <i class="el-icon-question"/>
+            </el-tooltip>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogVideoFormVisibleUpdate = false">取 消</el-button>
+        <el-button type="primary" @click="updateVideo()">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -132,7 +175,8 @@ export default {
         videoSourceId: ''
       },
       dialogChapterFormVisible:false,//章节弹框
-      dialogVideoFormVisible:false, //小节弹框
+      dialogVideoFormVisible:false, //新增小节弹框
+      dialogVideoFormVisibleUpdate:false,//修改小节弹框
 
       fileList: [],//上传文件列表
       BASE_API: process.env.VUE_APP_BASE_API // 接口API地址
@@ -158,8 +202,7 @@ export default {
         })
     },
 
-    //判断当前操作为添加章节还是修改章节
-    saveOrUpdate() {
+    saveOrUpdate(){
       if(!this.chapter.id) {
         this.addChapter()
       } else {
@@ -257,13 +300,13 @@ export default {
     },
 
     //==============================小节操作====================================
-    saveOrUpdateVideo(){
-      if(!this.video.id) {
+  /*  saveOrUpdateVideo(){
+      if(!this.chapter.id) {
         this.addVideo()
       } else {
         this.updateVideo()
       }
-    },
+    },*/
 
     //添加小节
     addVideo(){
@@ -288,7 +331,7 @@ export default {
       video.updateVideo(this.video)
         .then(response => {
           //关闭弹窗
-          this.dialogVideoFormVisible = false
+          this.dialogVideoFormVisibleUpdate = false
           //提示
           this.$message({
             type: 'success',
@@ -308,6 +351,9 @@ export default {
       this.video.sort = 0
       this.video.free = 0
       this.video.videoSourceId = ''
+
+      this.fileList=[]
+
       //设置章节id
       this.video.chapterId = chapterId
     },
@@ -315,7 +361,7 @@ export default {
     //弹出编辑修改小节的弹框 数据回显
     openEditVideo(VideoId){
       //弹框
-      this.dialogVideoFormVisible = true
+      this.dialogVideoFormVisibleUpdate = true
       //调用接口方法getVideoInfo
       video.getVideoInfo(VideoId)
         .then(response => {

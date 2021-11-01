@@ -65,16 +65,11 @@ public class EduCourseController {
     }
 
     //删除课程
-    @DeleteMapping("{id}")
+    @DeleteMapping("{courseId}")
     public R deleteCourse(@ApiParam(name = "id", value = "课程ID", required = true)
-                          @PathVariable String id){
-        boolean flag = eduCourseService.removeById(id);
-        System.out.println("flag=="+flag);
-        if(flag) {
-            return R.ok();
-        } else {
-            return R.error();
-        }
+                          @PathVariable String courseId){
+        eduCourseService.removeCourse(courseId);
+        return R.ok();
     }
 
     //最终发布

@@ -6,9 +6,11 @@ import com.cyj.serviceedu.domain.EduCourseDescription;
 import com.cyj.serviceedu.domain.vo.CoursePublishQuery;
 import com.cyj.serviceedu.domain.vo.CourseQuery;
 import com.cyj.serviceedu.mapper.EduCourseMapper;
+import com.cyj.serviceedu.service.EduChapterService;
 import com.cyj.serviceedu.service.EduCourseDescriptionService;
 import com.cyj.serviceedu.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cyj.serviceedu.service.EduVideoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     //课程描述注入
     @Autowired
     private EduCourseDescriptionService courseDescriptionService;
+
+    @Autowired
+    private EduVideoService eduVideoService;
+
+    @Autowired
+    private EduChapterService chapterService;
 
     @Override
     public String saveCourseInfo(CourseQuery courseQuery) {
@@ -97,6 +105,25 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     public CoursePublishQuery getCoursePublishQuery(String courseId) {
         CoursePublishQuery coursePublishQuery = baseMapper.getCoursePublishQuery(courseId);
         return coursePublishQuery;
+    }
+
+    //删除课程
+    @Override
+    public void removeCourse(String courseId) {
+        //1 根据课程id删除小节
+        eduVideoService.removeVideoByCourseId(courseId);
+
+        //2 根据课程id删除章节
+        chapterService.removeChapterByCourseId(courseId);
+
+        //3 根据课程id删除描述
+        courseDescriptionService.removeById(courseId);
+
+        //4 根据课程id删除课程本身
+        int result = baseMapper.deleteById(courseId);
+        if(result == 0) { //失败返回
+            throw new MyException(20001,"删除失败");
+        }
     }
 
 

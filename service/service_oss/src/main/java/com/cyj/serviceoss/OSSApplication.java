@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -12,6 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 //该注解（）中的属性：默认不加载数据库配置
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @ComponentScan(basePackages = {"com.cyj"})
+@EnableDiscoveryClient  //Nacos注册
 @EnableSwagger2
 public class OSSApplication {
     private static final Logger LOG = LoggerFactory.getLogger(OSSApplication.class);
